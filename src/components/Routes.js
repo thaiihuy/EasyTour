@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import {
-  	Text,
-	View,
 	Easing,
 	Animated,
 } from 'react-native';
@@ -12,6 +10,10 @@ import {
 
 import Login from '../pages/Login.js';
 import Signup from '../pages/Signup.js';
+import Home from '../pages/Home';
+import SideMenu from './SideMenu';
+import ChangeInfo from '../pages/ChangeInfo';
+import OderHistory from '../pages/OderHistory';
 import IndexApp from '../pages/IndexApp.js';
 const transitionConfig = () => {
 	return {
@@ -39,7 +41,11 @@ const transitionConfig = () => {
 			{
 				Login: Login,
 				Signup: Signup,
-				Home: IndexApp,
+				// Home: IndexApp,
+				Home:Home,
+				SideMenu:SideMenu,
+				ChangeInfo:ChangeInfo,
+				OderHistory:OderHistory,
 			},
 			{
 				initialRouteName:'Login',

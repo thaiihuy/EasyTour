@@ -8,12 +8,12 @@ import {
   Alert
 } from 'react-native';
 
-export default class API  {
-    static getTinhsFromApiAsync() {
-      return fetch('http://easytour.tk/api/tinh')
+export default class API {
+  static getTinhsFromApiAsync() {
+    return fetch('http://easytour.tk/api/tinh')
       .then((response) => response.json())
       .then((responseJson) => {
-       	return responseJson;
+        return responseJson;
         // Alert.alert(JSON.stringify(responseJson))
       })
       .catch((error) => {

@@ -13,6 +13,7 @@ import {
 
 import saveToken from './api/saveToken';
 import signIn from './api/signin';
+import { Global } from './Global';
 export default class Form extends Component {
 	constructor(props) {
 		super(props);
@@ -53,8 +54,11 @@ export default class Form extends Component {
 			.then(res => {
 				if(res.token!=undefined) 
 				{
-					this.props.navigation.navigate('Home');
-					saveToken(res.token);
+					Global.userData=res;
+					saveToken(JSON.stringify(res));
+					this.props.navigation.navigate('Home',{root:this.props.navigation});
+					
+
 				}
 				else{
 					alert('Sai tài khoản hoặc mật khẩu');
