@@ -14,6 +14,7 @@ import Home from '../pages/Home';
 import SideMenu from './SideMenu';
 import ChangeInfo from '../pages/ChangeInfo';
 import OderHistory from '../pages/OderHistory';
+import ProductDetail from '../pages/ProductDetail';
 import IndexApp from '../pages/IndexApp.js';
 const transitionConfig = () => {
 	return {
@@ -46,6 +47,7 @@ const transitionConfig = () => {
 				SideMenu:SideMenu,
 				ChangeInfo:ChangeInfo,
 				OderHistory:OderHistory,
+				ProductDetail:ProductDetail,
 			},
 			{
 				initialRouteName:'Login',

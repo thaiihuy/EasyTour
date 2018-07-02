@@ -14,7 +14,7 @@ export default class TourSwiper extends Component {
                     <Text style={styles.textStyle} >KHUYẾN MÃI HOT</Text>
                 </View>
                 <View style={{ justifyContent: 'flex-end', flex: 4 }}>
-                    <Swiper showsPagination width={imageWidth} height={imageHeight}>
+                    <Swiper showsPagination activeDotColor='#fff' width={imageWidth} height={imageHeight}>
 
                         <Image style={styles.imageStyle} source={{ uri: 'http://linhtours.vn/wp-content/uploads/2017/08/tour-du-lich-sapa-pansipang.jpg' }} />
 

@@ -4,10 +4,13 @@ import flatListData from './api/flatListData';
 import TourSwiper from '../components/TourSwiper';
 const { width } = Dimensions.get('window');
 class FlatListItem extends Component {
+    gotoDetail(){
+        this.props.navigation.navigate('ProductDetail',{item:this.props.item});
+    }
     render() {
         return (
             <View>
-                <TouchableOpacity style={styles.productContainer} >
+                <TouchableOpacity style={styles.productContainer} onPress={this.gotoDetail.bind(this)}>
                     <Image
                         style={styles.productImage}
                         source={{ uri: 'http://easytour.tk/image/' + this.props.item.hinhanh }}
@@ -81,8 +84,9 @@ export default class BasicFlatList extends Component {
             data: [],
             isLoading: false,
         }
-
+        // alert(JSON.stringify(this.props.navigation));
     }
+
     pullLoad() {
         this.setState({
             isLoading: true,
@@ -129,7 +133,7 @@ export default class BasicFlatList extends Component {
                             renderItem={({ item, index }) => {
                                 //console.log(`Item = ${JSON.stringify(item)}, index = ${index}`);
                                 return (
-                                    <FlatListItem item={item} index={index} >
+                                    <FlatListItem item={item} index={index} {...this.props}>
 
                                     </FlatListItem>);
                             }}

@@ -21,7 +21,7 @@ export default class HomeTour extends Component {
 		return (
 			<View style={styles.container}>
 
-                    <BasicFlatList />
+                    <BasicFlatList {...this.props} />
 			</View>
 		);
 	}
