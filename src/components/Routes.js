@@ -16,6 +16,7 @@ import ChangeInfo from '../pages/ChangeInfo';
 import OderHistory from '../pages/OderHistory';
 import ProductDetail from '../pages/ProductDetail';
 import IndexApp from '../pages/IndexApp.js';
+import Cart from '../pages/Cart.js';
 const transitionConfig = () => {
 	return {
 		transitionSpec: {
@@ -48,6 +49,7 @@ const transitionConfig = () => {
 				ChangeInfo:ChangeInfo,
 				OderHistory:OderHistory,
 				ProductDetail:ProductDetail,
+				Cart:Cart,
 			},
 			{
 				initialRouteName:'Login',

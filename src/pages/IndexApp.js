@@ -14,6 +14,7 @@ import Header from '../components/Header';
 import HomeTour from '../components/Home/HomeTour';
 import Profile from '../components/Profile/Profile';
 import Search from '../components/Search/Search';
+import Cart from '../pages/Cart';
 import TabNavigator from 'react-native-tab-navigator';
 export default class IndexApp extends Component {
 	constructor(props) {
@@ -43,9 +44,18 @@ export default class IndexApp extends Component {
 							title="Trang chủ"
 							renderIcon={() => <Image style={{ width: 20, height: 20 }} source={require('../images/icon/home.png')} />}
 							renderSelectedIcon={() => <Image style={{ width: 20, height: 20 }} source={require('../images/icon/home_select.png')} />}
-							badgeText="1"
+							// badgeText="1"
 							onPress={() => this.setState({ selectedTab: 'home' })}>
 							<HomeTour {...this.props} />
+						</TabNavigator.Item>
+						<TabNavigator.Item
+							selected={this.state.selectedTab === 'cart'}
+							title="Giỏ hàng"
+							renderIcon={() => <Image style={{ width: 20, height: 20 }} source={require('../images/icon/cart.png')} />}
+							renderSelectedIcon={() => <Image style={{ width: 20, height: 20 }} source={require('../images/icon/cart_selected.png')} />}
+							// badgeText="1"
+							onPress={() => this.setState({ selectedTab: 'cart' })}>
+							<Cart {...this.props} />
 						</TabNavigator.Item>
 						<TabNavigator.Item
 							selected={this.state.selectedTab === 'profile'}

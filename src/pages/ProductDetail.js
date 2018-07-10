@@ -6,13 +6,14 @@ import {
     TouchableOpacity,
     Image,
     Dimensions,
-    FlatList,
     ScrollView
 } from 'react-native';
 import icBack from '../images/icon/back_black.png';
-import icLogo from '../images/icon/addCart.png';
+import icLogo from '../images/icon/cart.png';
 import GetChang from '../components/api/getChang';
 import Swiper from 'react-native-swiper';
+import saveCart from '../components/api/saveCart';
+import getCart from '../components/api/getCart';
 const { height, width } = Dimensions.get('window');
 class OneSwiper extends Component {
     convertTime(time) {
@@ -24,36 +25,58 @@ class OneSwiper extends Component {
         // for (let i = l - 1; i-3; i >= 0) {
         //     priceTemp+='.'+price.substring(i,i-3);
         // }
-        var priceTemp=price.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g,"$1.");
-        return priceTemp+' VND';
+        var priceTemp = price.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1.");
+        return priceTemp + ' VNĐ';
     }
     render() {
         return (
-            <ScrollView>
-                <Image
-                    style={styles.productImage}
-                    source={{ uri: 'http://easytour.tk/image/' + this.props.item.hinhanh }}
-                />
-                <Text style={{ textAlign: 'center', fontSize: 25, fontWeight: '200', }}>{'Chặng: ' + this.props.item.tenDiemDi + ' - ' + this.props.item.tenDiemDen}</Text>
-                <Text style={{ fontSize: 20, }}>{'Giá: ' + this.convertPrice(this.props.item.gia)}</Text>
-                <Text style={{ fontSize: 20 }}>{this.convertTime(this.props.item.giodi)}</Text>
-                <Text style={styles.producePrice}>{this.props.item.mota}</Text>
-            </ScrollView>
+            <View>
+                <ScrollView>
+                    <Image
+                        style={styles.productImage}
+                        source={{ uri: 'http://easytour.tk/image/' + this.props.item.hinhanh }}
+                    />
+                    <Text style={{ textAlign: 'center', fontSize: 25, fontWeight: '200', }}>{'Chặng: ' + this.props.item.tenDiemDi + ' - ' + this.props.item.tenDiemDen}</Text>
+                    <Text style={{ fontSize: 20, }}>{'Giá: ' + this.convertPrice(this.props.item.gia)}</Text>
+                    <Text style={{ fontSize: 20 }}>{this.convertTime(this.props.item.giodi)}</Text>
+                    <Text style={styles.producePrice}>{this.props.item.mota}</Text>
+                </ScrollView>
+            </View>
         );
     }
 }
-export default class OderHistory extends Component {
+export default class ProductDetail extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
             isLoading: false,
             data: [],
-
+            cartArray: [],
         };
+        const { item
+        } = this.props.navigation.state.params;
+    }
+    componentWillMount(){
+        getCart().then(data=>{
+            this.setState({
+                cartArray:data,
+            })
+        })
     }
     BackToHome() {
-        this.props.navigation.navigate('Home')
+        this.props.navigation.navigate('Home');
+    }
+    goToCard(){
+        this.props.navigation.navigate('Cart');
+    }
+    addToCard(){
+        const dt=this.props.navigation.state.params.item;
+        this.setState(
+            { cartArray: this.state.cartArray.concat(dt) }, 
+            () => saveCart(this.state.cartArray)
+        );
+        alert('Thêm vào giỏ hàng thành công!');
     }
     componentDidMount() {
         this.setState({
@@ -81,12 +104,11 @@ export default class OderHistory extends Component {
                         <TouchableOpacity onPress={this.BackToHome.bind(this)}>
                             <Image style={{ width: 25, height: 25 }} source={icBack} />
                         </TouchableOpacity>
-                        <Text style={{ fontSize: 20 }}>Chi tiết Tour</Text>
-                        <TouchableOpacity>
+                        <Text style={{ fontSize: 20 }}>{item.tentour}</Text>
+                        <TouchableOpacity onPress={this.goToCard.bind(this)}>
                             <Image style={{ width: 25, height: 25 }} source={icLogo} />
                         </TouchableOpacity>
                     </View>
-                    <Text style={{ fontSize: 17, textAlign: 'center' }}>{item.tentour}</Text>
                 </View>
                 <View style={styles.wrapper}>
                     {this.state.data.length > 0 &&
@@ -100,6 +122,11 @@ export default class OderHistory extends Component {
                                 )
                             })}
                         </Swiper>}
+                </View>
+                <View>
+                    <TouchableOpacity style={styles.button} onPress={this.addToCard.bind(this)}>
+                        <Text style={styles.buttonText}>{'Thêm vào giỏ hàng'}</Text>
+                    </TouchableOpacity>
                 </View>
             </View>
         );
@@ -134,4 +161,13 @@ const styles = StyleSheet.create({
         width: width,
         height: height / 3,
     },
+    button: {
+        backgroundColor: '#bfcc50',
+        paddingVertical: 13,
+    },
+    buttonText: {
+		fontSize: 16,
+		fontWeight: '500',
+		textAlign: 'center',
+	},
 })

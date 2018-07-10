@@ -16,7 +16,7 @@ export default class SideMenu extends Component {
     this.props.navigation.navigate('OderHistory');
   }
   onSignOut() {
-    AsyncStorage.clear();
+    AsyncStorage.removeItem('@token');
     this.props.navigation.navigate('Login');
   }
   // Logout(){

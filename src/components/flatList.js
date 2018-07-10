@@ -7,6 +7,10 @@ class FlatListItem extends Component {
     gotoDetail(){
         this.props.navigation.navigate('ProductDetail',{item:this.props.item});
     }
+    convertPrice(price) {
+        var priceTemp = price.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1.");
+        return priceTemp + ' VNĐ';
+    }
     render() {
         return (
             <View>
@@ -16,6 +20,7 @@ class FlatListItem extends Component {
                         source={{ uri: 'http://easytour.tk/image/' + this.props.item.hinhanh }}
                     />
                     <Text style={styles.produceName}>{this.props.item.tentour}</Text>
+                    <Text style={styles.produceName}>{this.convertPrice(this.props.item.total)}</Text>
                     <Text style={styles.producePrice}>{this.props.item.mota}</Text>
                 </TouchableOpacity>
             </View>
