@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, Image, AsyncStorage } from 'react-native';
 import profileIcon from '../images/icon/profile.png';
+import getToken from './api/getToken';
 export default class SideMenu extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
+      user:'',
     };
     // alert(JSON.stringify(this.props.navigation));
   }
@@ -13,26 +15,33 @@ export default class SideMenu extends Component {
     this.props.navigation.navigate('ChangeInfo');
   }
   gotoOrderHistory() {
-    this.props.navigation.navigate('OderHistory');
+    this.props.navigation.navigate('OrderHistory');
   }
   onSignOut() {
-    AsyncStorage.removeItem('@token');
+    AsyncStorage.clear();
     this.props.navigation.navigate('Login');
   }
   // Logout(){
   //   // AsyncStorage.clear();
   //   this.props.navigation.navigate('Login');
   // }
+  componentWillMount() {
+    getToken().then(res => {
+        this.setState({
+            user: res.user.username,
+        })
+    })
+}
   render() {
     return (
       <View style={styles.container}>
         <Image source={profileIcon} style={styles.profile} />
         <View style={styles.loginContainer}>
-          {/* <Text style={styles.username}>{'Xin chào Thái Huy'}</Text> */}
+          <Text style={styles.username}>Xin chào {this.state.user}</Text>
           <View>
-            <TouchableOpacity style={styles.btnSignInStyle} onPress={this.gotoOrderHistory.bind(this)}>
+            {/* <TouchableOpacity style={styles.btnSignInStyle} onPress={this.gotoOrderHistory.bind(this)}>
               <Text style={styles.btnTextSignIn}>Lịch sử đặt Tour</Text>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
             <TouchableOpacity style={styles.btnSignInStyle} onPress={this.gotoChangeInfo.bind(this)}>
               <Text style={styles.btnTextSignIn}>Thay đổi thông tin</Text>
             </TouchableOpacity>

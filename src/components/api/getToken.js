@@ -4,7 +4,8 @@ const getToken = async () => {
     try {
         const value = await AsyncStorage.getItem('@token');
         if (value !== null) {
-            return Promise.resolve(value);
+            let res= JSON.parse(value);
+            return Promise.resolve(res);
         }
         return Promise.reject(value);
     } catch (error) {

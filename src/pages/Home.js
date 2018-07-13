@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity,Dimensions } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, Dimensions } from 'react-native';
 import Drawer from 'react-native-drawer';
 import IndexApp from '../pages/IndexApp';
 import SideMenu from '../components/SideMenu';
@@ -28,9 +28,9 @@ export default class Home extends Component {
                 content={
                     <SideMenu {...this.props} />
                 }
-                
+
             >
-                <IndexApp navigation = {this.props.navigation} open={this.openControlPanel.bind(this)} />
+                <IndexApp navigation={this.props.navigation} open={this.openControlPanel.bind(this)} />
             </Drawer>
         );
     }

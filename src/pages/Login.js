@@ -45,9 +45,9 @@ export default class Login extends Component {
 	async	componentWillMount() {
 		// alert(JSON.stringify(getToken()));
 		await getToken().then(data => {
-			if (data != '') { 
-				Global.userData=JSON.parse(data);
-				this.props.navigation.navigate('Home'); 
+			if (data != '') {
+				Global.userData = data;
+				this.props.navigation.navigate('Home');
 			}
 		});
 		// if(temp!=''){

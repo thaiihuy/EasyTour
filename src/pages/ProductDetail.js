@@ -36,9 +36,15 @@ class OneSwiper extends Component {
                         style={styles.productImage}
                         source={{ uri: 'http://easytour.tk/image/' + this.props.item.hinhanh }}
                     />
-                    <Text style={{ textAlign: 'center', fontSize: 25, fontWeight: '200', }}>{'Chặng: ' + this.props.item.tenDiemDi + ' - ' + this.props.item.tenDiemDen}</Text>
-                    <Text style={{ fontSize: 20, }}>{'Giá: ' + this.convertPrice(this.props.item.gia)}</Text>
-                    <Text style={{ fontSize: 20 }}>{this.convertTime(this.props.item.giodi)}</Text>
+                    <Text style={{ textAlign: 'center', fontSize: 25, fontWeight: '400', color: 'black' }}>{'Chặng: ' + this.props.item.tenDiemDi + ' - ' + this.props.item.tenDiemDen}</Text>
+                    <Text style={{
+                        fontSize: 20, fontFamily: 'Avenir',
+                        color: 'red'
+                    }}>{'Giá: ' + this.convertPrice(this.props.item.gia)}</Text>
+                    <Text style={{
+                        fontSize: 20, fontFamily: 'Avenir',
+                        color: '#662F90'
+                    }}>{this.convertTime(this.props.item.giodi)}</Text>
                     <Text style={styles.producePrice}>{this.props.item.mota}</Text>
                 </ScrollView>
             </View>
@@ -53,30 +59,31 @@ export default class ProductDetail extends Component {
             isLoading: false,
             data: [],
             cartArray: [],
+
         };
         const { item
         } = this.props.navigation.state.params;
     }
-    componentWillMount(){
-        getCart().then(data=>{
+    componentWillMount() {
+        getCart().then(data => {
             this.setState({
-                cartArray:data,
+                cartArray: data,
             })
         })
     }
     BackToHome() {
         this.props.navigation.navigate('Home');
     }
-    goToCard(){
-        this.props.navigation.navigate('Cart');
-    }
-    addToCard(){
-        const dt=this.props.navigation.state.params.item;
-        this.setState(
-            { cartArray: this.state.cartArray.concat(dt) }, 
-            () => saveCart(this.state.cartArray)
-        );
-        alert('Thêm vào giỏ hàng thành công!');
+    // goToCard() {
+    //     this.props.navigation.navigate('Home', { selectedTab: 'cart', title: 'Giỏ hàng', root: this.props.navigation });
+    // }
+    order() {
+        // const dt = this.props.navigation.state.params.item;
+        // await this.setState(
+        //     { cartArray: this.state.cartArray.concat(dt) },
+        //     () => saveCart(this.state.cartArray)
+        // );
+        this.props.navigation.navigate('Order', { tour: this.props.navigation.state.params.item });
     }
     componentDidMount() {
         this.setState({
@@ -105,9 +112,9 @@ export default class ProductDetail extends Component {
                             <Image style={{ width: 25, height: 25 }} source={icBack} />
                         </TouchableOpacity>
                         <Text style={{ fontSize: 20 }}>{item.tentour}</Text>
-                        <TouchableOpacity onPress={this.goToCard.bind(this)}>
+                        {/* <TouchableOpacity onPress={this.goToCard.bind(this)}>
                             <Image style={{ width: 25, height: 25 }} source={icLogo} />
-                        </TouchableOpacity>
+                        </TouchableOpacity> */}
                     </View>
                 </View>
                 <View style={styles.wrapper}>
@@ -124,8 +131,8 @@ export default class ProductDetail extends Component {
                         </Swiper>}
                 </View>
                 <View>
-                    <TouchableOpacity style={styles.button} onPress={this.addToCard.bind(this)}>
-                        <Text style={styles.buttonText}>{'Thêm vào giỏ hàng'}</Text>
+                    <TouchableOpacity style={styles.button} onPress={this.order.bind(this)}>
+                        <Text style={styles.buttonText}>{'Đặt tour'}</Text>
                     </TouchableOpacity>
                 </View>
             </View>
@@ -161,13 +168,17 @@ const styles = StyleSheet.create({
         width: width,
         height: height / 3,
     },
+    productPrice: {
+        color: 'black',
+        fontWeight: '500',
+    },
     button: {
         backgroundColor: '#bfcc50',
         paddingVertical: 13,
     },
     buttonText: {
-		fontSize: 16,
-		fontWeight: '500',
-		textAlign: 'center',
-	},
+        fontSize: 16,
+        fontWeight: '500',
+        textAlign: 'center',
+    },
 })

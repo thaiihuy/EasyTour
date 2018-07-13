@@ -14,6 +14,7 @@ import {
 } from 'react-native';
 const { width } = Dimensions.get('window');
 import getCart from '../components/api/getCart';
+import saveCart from '../components/api/saveCart';
 class ItemCart extends Component {
 	gotoDetail() {
 		this.props.navigation.navigate('ProductDetail', { item: this.props.item });
@@ -30,11 +31,20 @@ class ItemCart extends Component {
 						style={styles.productImage}
 						source={{ uri: 'http://easytour.tk/image/' + this.props.item.hinhanh }}
 					/>
-					<View style={{ flexDirection: 'column',justifyContent:'space-around' }}>
+					<View style={{ flexDirection: 'column', justifyContent: 'space-around' }}>
 						<Text style={styles.produceName}>{this.props.item.tentour}</Text>
 						<Text style={styles.produceName}>{this.convertPrice(this.props.item.total)}</Text>
+						<View style={styles.numberOfProduct}>
+							<TouchableOpacity onPress={() => this.incrQuantity(this.props.item.id)}>
+								<Text>+</Text>
+							</TouchableOpacity>
+							<Text>{this.props.item.soluong}</Text>
+							<TouchableOpacity onPress={() => this.decrQuantity(this.props.item.id)}>
+								<Text>-</Text>
+							</TouchableOpacity>
+						</View>
 					</View>
-					<TouchableOpacity>
+					<TouchableOpacity onPress={() => this.props.onPress(this.props.item)}>
 						<Text>{'Xóa'}</Text>
 					</TouchableOpacity>
 				</TouchableOpacity>
@@ -50,6 +60,18 @@ export default class Cart extends Component {
 			data: [],
 			price: 0,
 		};
+	}
+	xoaTour(item) {
+		var i = this.state.data.findIndex(x => x.id === item.id);
+		if (i != -1) {
+			this.state.data.splice(i, 1);
+			saveCart(this.state.data);
+			var total = 0;
+			for (let i = 0; i < this.state.data.length; i++) {
+				total += parseInt(this.state.data[i].total);
+			}
+			this.setState({ price: total });
+		}
 	}
 	convertPrice(price) {
 		var priceTemp = price.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1.");
@@ -76,7 +98,7 @@ export default class Cart extends Component {
 							renderItem={({ item, index }) => {
 								//console.log(`Item = ${JSON.stringify(item)}, index = ${index}`);
 								return (
-									<ItemCart item={item} index={index} {...this.props}>
+									<ItemCart item={item} index={index} {...this.props} onPress={(item) => this.xoaTour(item)}>
 
 									</ItemCart>);
 							}}
@@ -92,7 +114,7 @@ export default class Cart extends Component {
 					<Text style={{ alignSelf: 'flex-end' }}>{'Tổng cộng: ' + this.convertPrice(this.state.price)}</Text>
 				</View>
 				<View>
-					<TouchableOpacity style={styles.button}>
+					<TouchableOpacity style={styles.button} onPress={alert(JSON.stringify(this.state.data))}>
 						<Text style={styles.buttonText}>{'Đặt tour'}</Text>
 					</TouchableOpacity>
 				</View>
@@ -120,10 +142,15 @@ const styles = StyleSheet.create({
 		fontWeight: '500',
 		textAlign: 'center',
 	},
-	productContainer: {
-		flex:1,
+	numberOfProduct: {
+		flex: 1,
 		flexDirection: 'row',
-		margin:10,
-		justifyContent:'space-between',
+		justifyContent: 'space-around'
+	},
+	productContainer: {
+		flex: 1,
+		flexDirection: 'row',
+		margin: 10,
+		justifyContent: 'space-between',
 	}
 });

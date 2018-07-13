@@ -20,7 +20,7 @@ class FlatListItem extends Component {
                         source={{ uri: 'http://easytour.tk/image/' + this.props.item.hinhanh }}
                     />
                     <Text style={styles.produceName}>{this.props.item.tentour}</Text>
-                    <Text style={styles.produceName}>{this.convertPrice(this.props.item.total)}</Text>
+                    <Text style={styles.produceTotal}>{this.convertPrice(this.props.item.total)}</Text>
                     <Text style={styles.producePrice}>{this.props.item.mota}</Text>
                 </TouchableOpacity>
             </View>
@@ -56,14 +56,21 @@ const styles = StyleSheet.create({
         marginVertical: 5,
         paddingLeft: 10,
         fontFamily: 'Avenir',
-        color: '#D3D3CF',
-        fontWeight: '500'
+        color: 'black',
+        fontWeight: '500',
+        fontSize:15,
     },
     producePrice: {
         marginBottom: 5,
         paddingLeft: 10,
         fontFamily: 'Avenir',
         color: '#662F90'
+    },
+    produceTotal:{ 
+        marginBottom: 5,
+        paddingLeft: 10,
+        fontFamily: 'Avenir',
+        color: 'red'
     },
     titleContainer: {
         height: 50,

@@ -13,10 +13,11 @@ import Signup from '../pages/Signup.js';
 import Home from '../pages/Home';
 import SideMenu from './SideMenu';
 import ChangeInfo from '../pages/ChangeInfo';
-import OderHistory from '../pages/OderHistory';
+import OrderHistory from '../pages/OrderHistory';
 import ProductDetail from '../pages/ProductDetail';
 import IndexApp from '../pages/IndexApp.js';
 import Cart from '../pages/Cart.js';
+import Order from '../pages/Order.js';
 const transitionConfig = () => {
 	return {
 		transitionSpec: {
@@ -43,13 +44,14 @@ const transitionConfig = () => {
 			{
 				Login: Login,
 				Signup: Signup,
-				// Home: IndexApp,
+				IndexApp:IndexApp,
 				Home:Home,
 				SideMenu:SideMenu,
 				ChangeInfo:ChangeInfo,
-				OderHistory:OderHistory,
+				OrderHistory:OrderHistory,
 				ProductDetail:ProductDetail,
 				Cart:Cart,
+				Order:Order,
 			},
 			{
 				initialRouteName:'Login',

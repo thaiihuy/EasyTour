@@ -11,25 +11,44 @@ import {
 } from 'react-native';
 import icBack from '../images/icon/back_black.png';
 import icLogo from '../images/icon/oder_history.png';
-export default class OderHistory extends Component {
+import getToken from '../components/api/getToken';
+import GetOrder from '../components/api/getOrder';
+export default class OrderHistory extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
+            data: [],
+            user: null,
         };
+        
     }
     BackToHome() {
-        this.props.navigation.navigate('Home')
+        this.props.navigation.navigate('Home');
     }
+    componentWillMount() {
+        getToken().then(res => {
+            this.setState({
+                user: res.user.id,
+            })
+        })
+        
+    }
+
+    // componentWillMount() {
+    //     // GetOrder(JSON.stringify(this.state.userid)).then(res => {
+    //     //     this.setState({
+    //     //         data: res,
+    //     //     });
+    //     alert(JSON.stringify(this.state.userid));
+    //     // })
+    // }
     render() {
+        alert(JSON.stringify(this.state.data));
         return (
             <View style={styles.container}>
-                <View style={styles.row1}>
-                    <TouchableOpacity onPress={this.BackToHome.bind(this)}>
-                        <Image source={icBack} style={styles.iconStyle} />
-                    </TouchableOpacity>
-                    <Text style={styles.titleStyle}>Lịch sử đặt Tour</Text>
-                    <Image source={icLogo} style={styles.iconStyle} />
+                <View>
+
                 </View>
             </View>
         );
