@@ -26,6 +26,7 @@ export default class IndexApp extends Component {
 			selectedTab: 'home',
 			title: 'Trang Chủ',
 		};
+		this.component=[];
 	}
 	// componentDidMount() {
 	// 	if (this.props.navigation.state.params) {
@@ -66,8 +67,11 @@ export default class IndexApp extends Component {
 							renderIcon={() => <Image style={{ width: 20, height: 20 }} source={require('../images/icon/cart.png')} />}
 							renderSelectedIcon={() => <Image style={{ width: 20, height: 20 }} source={require('../images/icon/cart_selected.png')} />}
 							// badgeText="1"
-							onPress={() => this.setState({ selectedTab: 'orderHistory', title: 'Lịch sử' })}>
-							<OrderHistory {...this.props} />
+							onPress={() => {
+								
+								this.setState({ selectedTab: 'orderHistory', title: 'Lịch sử' })
+							}}>
+							<OrderHistory  {...this.props} />
 						</TabNavigator.Item>
 						{/* <TabNavigator.Item
 							selected={this.state.selectedTab === 'profile'}

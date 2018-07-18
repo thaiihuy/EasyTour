@@ -19,7 +19,7 @@ class FlatListItem extends Component {
                         style={styles.productImage}
                         source={{ uri: 'http://easytour.tk/image/' + this.props.item.hinhanh }}
                     />
-                    <Text style={styles.produceName}>{this.props.item.tentour}</Text>
+                    <Text numberOfLines={1} style={styles.produceName}>{this.props.item.tentour}</Text>
                     <Text style={styles.produceTotal}>{this.convertPrice(this.props.item.total)}</Text>
                     <Text style={styles.producePrice}>{this.props.item.mota}</Text>
                 </TouchableOpacity>

@@ -21,20 +21,26 @@ export default class OrderHistory extends Component {
             data: [],
             user: null,
         };
-        
+
     }
     BackToHome() {
         this.props.navigation.navigate('Home');
     }
     componentWillMount() {
-        getToken().then(res => {
-            this.setState({
-                user: res.user.id,
-            })
-        })
-        
+        this.loadData();
     }
+    loadData() {
+        getToken().then(res => {
+            GetOrder(res.user.id).then(resp => {
 
+                this.setState({
+                    user: res.user.id,
+                    data: resp,
+                });
+            })
+
+        })
+    }
     // componentWillMount() {
     //     // GetOrder(JSON.stringify(this.state.userid)).then(res => {
     //     //     this.setState({
@@ -43,8 +49,10 @@ export default class OrderHistory extends Component {
     //     alert(JSON.stringify(this.state.userid));
     //     // })
     // }
+    componentWillReceiveProps() {
+        this.loadData();
+    }
     render() {
-        alert(JSON.stringify(this.state.data));
         return (
             <View style={styles.container}>
                 <View>

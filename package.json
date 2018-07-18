@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
+    "new": "npm run start -- --reset-cache",
     "adrun": "react-native run-android",
     "test": "jest"
   },

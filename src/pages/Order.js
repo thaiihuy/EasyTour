@@ -69,12 +69,12 @@ export default class Order extends Component {
         var ngaydat = today.getFullYear() + '-' + parseInt(today.getMonth() + 1) + '-' + today.getDate() + ' ' + today.getHours() + ':' + today.getMinutes() + ':' + today.getSeconds();
         let tonggia = parseFloat(this.state.price);
         await sendOrder(id_khachhang, id_tour, soluong, ngaydat, tonggia);
-        
+
         this.setModalVisible(true);
     }
     render() {
         return (
-
+            
             <View style={styles.container}>
                 <Modal
                     animationType="slide"
