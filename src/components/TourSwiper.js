@@ -11,7 +11,7 @@ export default class TourSwiper extends Component {
             <View style={styles.wrapper}>
 
                 <View style={{ justifyContent: 'center', height: 50 }}>
-                    <Text style={styles.textStyle} >KHUYẾN MÃI HOT</Text>
+                    <Text style={styles.textStyle} >HOT</Text>
                 </View>
                 <View style={{ justifyContent: 'flex-end', flex: 4 }}>
                     <Swiper showsPagination activeDotColor='#fff' width={imageWidth} height={imageHeight}>

@@ -11,6 +11,9 @@ class FlatListItem extends Component {
         var priceTemp = price.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1.");
         return priceTemp + ' VNĐ';
     }
+    convertTime(time) {
+        return 'Ngày đi: ' + time.substring(8, 10) + '-' + time.substring(5, 7) + '-' + time.substring(0, 4);
+    }
     render() {
         return (
             <View>
@@ -20,6 +23,7 @@ class FlatListItem extends Component {
                         source={{ uri: 'http://easytour.tk/image/' + this.props.item.hinhanh }}
                     />
                     <Text numberOfLines={1} style={styles.produceName}>{this.props.item.tentour}</Text>
+                    <Text style={styles.produceTotal}>{this.convertTime(this.props.item.ngaydi)}</Text>
                     <Text style={styles.produceTotal}>{this.convertPrice(this.props.item.total)}</Text>
                     <Text style={styles.producePrice}>{this.props.item.mota}</Text>
                 </TouchableOpacity>
@@ -137,7 +141,7 @@ export default class BasicFlatList extends Component {
                     <TourSwiper />
                     <View style={styles.container}>
                         <View style={styles.titleContainer}>
-                            <Text style={styles.title}>HOT TOUR</Text>
+                            <Text style={styles.title}>TOUR</Text>
                         </View>
                         <FlatList
                             contentContainerStyle={styles.body}

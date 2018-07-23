@@ -18,6 +18,7 @@ import ProductDetail from '../pages/ProductDetail';
 import IndexApp from '../pages/IndexApp.js';
 import Cart from '../pages/Cart.js';
 import Order from '../pages/Order.js';
+import Locate from '../pages/Locate.js';
 const transitionConfig = () => {
 	return {
 		transitionSpec: {
@@ -52,6 +53,7 @@ const transitionConfig = () => {
 				ProductDetail:ProductDetail,
 				Cart:Cart,
 				Order:Order,
+				Locate:Locate,
 			},
 			{
 				initialRouteName:'Login',

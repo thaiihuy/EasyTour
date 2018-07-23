@@ -13,15 +13,36 @@ import {
 } from 'react-native';
 import icBack from '../images/icon/back_black.png';
 import icLogo from '../images/icon/user.png';
+import getToken from '../components/api/getToken';
+import EditInfo from '../components/api/editInfo';
 export default class ChangeInfo extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
+            ten:'',
+            email:'',
+            sdt:'',
+            id:'',
         };
     }
     Save() {
-
+        EditInfo(this.state.id,this.state.ten,this.state.email,this.state.sdt).then(res=>{
+            alert(JSON.stringify(res));
+        })
+    }
+    loadData() {
+        getToken().then(res => {
+           this.setState({ 
+               id:res.user.id,
+               ten:res.user.ten,
+               email:res.user.email,
+               sdt:res.user.sdt,
+           })
+        })
+    }
+    componentWillMount(){
+        this.loadData();
     }
     BackToHome() {
         this.props.navigation.navigate('Home')
@@ -40,22 +61,15 @@ export default class ChangeInfo extends Component {
                     <TextInput style={styles.inputBox}
                         underlineColorAndroid='rgba(0,0,0,0)'
                         placeholder='Họ tên'
-                        value={this.state.name}
-                        onChangeText={(text) => this.setState({ name: text })}
+                        value={this.state.ten}
+                        onChangeText={(text) => this.setState({ ten: text })}
                     />
                     <TextInput style={styles.inputBox}
                         underlineColorAndroid='rgba(0,0,0,0)'
                         placeholder='Email'
-                        value={this.state.Email}
-                        onChangeText={(text) => this.setState({ Email: text })}
+                        value={this.state.email}
+                        onChangeText={(text) => this.setState({ email: text })}
                     />
-                    {/* <Picker
-                        selectedValue={this.state.sex}
-                        style={{ height: 50, width: 100 }}
-                        onValueChange={(itemValue, itemIndex) => this.setState({ sex: itemValue })}>
-                        <Picker.Item label="Nam" value="1" />
-                        <Picker.Item label="Nữ" value="0" />
-                    </Picker> */}
                     <TextInput style={styles.inputBox}
                         underlineColorAndroid='rgba(0,0,0,0)'
                         placeholder='Số điện thoại'
@@ -81,7 +95,7 @@ const styles = StyleSheet.create({
     titleStyle: { color: 'black', fontFamily: 'Avenir', fontSize: 30 },
     iconStyle: { width: 30, height: 30 },
     txtSave: {
-        color: '#fff'
+        color: 'black'
     },
     signUpStyle: {
         backgroundColor: '#bfcc50',

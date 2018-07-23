@@ -18,6 +18,7 @@ export default class FormSignUp extends Component {
 		this.state = {
 			username: null,
 			password: null,
+			rePassword: null,
 			sdt: null,
 		};
 	}
@@ -45,15 +46,27 @@ export default class FormSignUp extends Component {
 			{ cancelable: false }
 		);
 	}
-	
+
 	checkRegister() {
-        const { username, sdt, password } = this.state;
-        register(username, sdt, password)
-        .then(res => {
-            if (res.message === 'User created successfully') return this.onSuccess();
-            this.onFail();
-        });
-}
+		const { username, sdt, password } = this.state;
+		if (password == this.state.rePassword) {
+			register(username, sdt, password)
+				.then(res => {
+					if (res.message === 'User created successfully') return this.onSuccess();
+					this.onFail();
+				});
+		}else{
+			Alert.alert(
+				'Thông báo',
+				'Nhập lại mật khẩu không đúng!',
+				[
+					{ text: 'OK', onPress: this.removeUsername.bind(this) }
+				],
+				{ cancelable: false }
+			);
+		}
+
+	}
 	// async checkRegister() {
 	// 	try {
 	// 		let dt = await fetch('http://easytour.tk/api/auth/register', {
@@ -111,6 +124,8 @@ export default class FormSignUp extends Component {
 					underlineColorAndroid='rgba(0,0,0,0)'
 					secureTextEntry={true}
 					placeholder='Nhập lại mật khẩu'
+					value={this.state.rePassword}
+					onChangeText={(text) => this.setState({ rePassword: text })}
 				/>
 				<TouchableOpacity style={styles.button} onPress={this.checkRegister.bind(this)}>
 					<Text style={styles.buttonText}>{this.props.type}</Text>

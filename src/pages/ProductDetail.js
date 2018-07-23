@@ -9,7 +9,7 @@ import {
     ScrollView
 } from 'react-native';
 import icBack from '../images/icon/back_black.png';
-import icLogo from '../images/icon/cart.png';
+import icLogo from '../images/icon/tour.png';
 import GetChang from '../components/api/getChang';
 import Swiper from 'react-native-swiper';
 import saveCart from '../components/api/saveCart';
@@ -85,6 +85,9 @@ export default class ProductDetail extends Component {
         // );
         this.props.navigation.navigate('Order', { tour: this.props.navigation.state.params.item });
     }
+    goToLocate() {
+        this.props.navigation.navigate('Locate');
+    }
     componentDidMount() {
         this.setState({
             isLoading: true,
@@ -107,14 +110,17 @@ export default class ProductDetail extends Component {
             <View style={styles.container}>
 
                 <View style={{ height: height / 8, flex: 1 / 15, backgroundColor: '#bfcc50', padding: 10, justifyContent: 'space-around', alignContent: 'center' }}>
-                    <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                    <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
                         <TouchableOpacity onPress={this.BackToHome.bind(this)}>
                             <Image style={{ width: 25, height: 25 }} source={icBack} />
                         </TouchableOpacity>
-                        <Text style={{ fontSize: 20 }}>{item.tentour}</Text>
-                        {/* <TouchableOpacity onPress={this.goToCard.bind(this)}>
+                        <View style={{width:width-80}}>
+                            <Text numberOfLines={1} style={{ fontSize: 15, fontWeight: '500' }}>{item.tentour}</Text>
+                        </View>
+                        
+                        <TouchableOpacity onPress={this.goToLocate.bind(this)}>
                             <Image style={{ width: 25, height: 25 }} source={icLogo} />
-                        </TouchableOpacity> */}
+                        </TouchableOpacity>
                     </View>
                 </View>
                 <View style={styles.wrapper}>
