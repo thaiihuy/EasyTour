@@ -3,41 +3,55 @@ import {
     StyleSheet,
     Text,
     View,
-    StatusBar,
     TouchableOpacity,
-    Alert,
-    AsyncStorage,
     Image,
     TextInput,
-    Picker,
+    Alert
 } from 'react-native';
 import icBack from '../images/icon/back_black.png';
 import icLogo from '../images/icon/user.png';
 import getToken from '../components/api/getToken';
 import EditInfo from '../components/api/editInfo';
+import ChangePassword from '../components/api/changePassword';
 export default class ChangeInfo extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            ten:'',
-            email:'',
-            sdt:'',
-            id:'',
+            password:'',
+            repassword:'',
         };
     }
+    removePassword() {
+		this.setState({ repassword: '',password:'' });
+	}
     Save() {
-        EditInfo(this.state.id,this.state.ten,this.state.email,this.state.sdt).then(res=>{
-            alert(JSON.stringify(res));
+        if(this.state.password==this.state.repassword){
+        ChangePassword(this.state.id,this.state.password).then(res=>{
+            Alert.alert(
+				'Thông báo',
+				'Thay đổi mật khẩu thành công!',
+				[
+					{ text: 'OK', onPress: this.BackToHome.bind(this) }
+				],
+				{ cancelable: false }
+			);
         })
+    }else{
+        Alert.alert(
+            'Thông báo',
+            'Nhập lại mật khẩu không đúng!',
+            [
+                { text: 'OK',  onPress: this.removePassword.bind(this) }
+            ],
+            { cancelable: false }
+        );
     }
+}
     loadData() {
         getToken().then(res => {
            this.setState({ 
                id:res.user.id,
-               ten:res.user.ten,
-               email:res.user.email,
-               sdt:res.user.sdt,
            })
         })
     }
@@ -45,7 +59,7 @@ export default class ChangeInfo extends Component {
         this.loadData();
     }
     BackToHome() {
-        this.props.navigation.navigate('Home')
+        this.props.navigation.navigate('Home');
     }
     render() {
         return (
@@ -54,28 +68,30 @@ export default class ChangeInfo extends Component {
                     <TouchableOpacity onPress={this.BackToHome.bind(this)}>
                         <Image source={icBack} style={styles.iconStyle} />
                     </TouchableOpacity>
-                    <Text style={styles.titleStyle}>Thay đổi thông tin</Text>
+                    <Text style={styles.titleStyle}>Đổi mật khẩu</Text>
                     <Image source={icLogo} style={styles.iconStyle} />
                 </View>
                 <View>
                     <TextInput style={styles.inputBox}
                         underlineColorAndroid='rgba(0,0,0,0)'
-                        placeholder='Họ tên'
-                        value={this.state.ten}
-                        onChangeText={(text) => this.setState({ ten: text })}
+                        secureTextEntry={true}
+                        placeholder='Mật khẩu mới'
+                        value={this.state.password}
+                        onChangeText={(text) => this.setState({ password: text })}
                     />
                     <TextInput style={styles.inputBox}
                         underlineColorAndroid='rgba(0,0,0,0)'
-                        placeholder='Email'
-                        value={this.state.email}
-                        onChangeText={(text) => this.setState({ email: text })}
+                        secureTextEntry={true}
+                        placeholder='Nhập lại mật khẩu mới'
+                        value={this.state.repassword}
+                        onChangeText={(text) => this.setState({ repassword: text })}
                     />
-                    <TextInput style={styles.inputBox}
+                    {/* <TextInput style={styles.inputBox}
                         underlineColorAndroid='rgba(0,0,0,0)'
                         placeholder='Số điện thoại'
                         value={this.state.sdt}
                         onChangeText={(text) => this.setState({ sdt: text })}
-                    />
+                    /> */}
                 </View>
                 <TouchableOpacity style={styles.signUpStyle} onPress={this.Save.bind(this)}>
                     <Text style={styles.txtSave}>Lưu lại</Text>

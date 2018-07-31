@@ -43,7 +43,7 @@ export default class SideMenu extends Component {
               <Text style={styles.btnTextSignIn}>Lịch sử đặt Tour</Text>
             </TouchableOpacity> */}
             <TouchableOpacity style={styles.btnSignInStyle} onPress={this.gotoChangeInfo.bind(this)}>
-              <Text style={styles.btnTextSignIn}>Thay đổi thông tin</Text>
+              <Text style={styles.btnTextSignIn}>Đổi mật khẩu</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.btnSignInStyle} onPress={this.onSignOut.bind(this)}>
               <Text style={styles.btnTextSignIn}>Đăng xuất</Text>
@@ -77,7 +77,8 @@ const styles = StyleSheet.create({
   username: {
     color: 'black',
     fontFamily: 'Avenir',
-    fontSize: 25
+    fontSize: 25,
+    textAlign:'center',
   },
   btnSignInStyle: {
     height: 50,

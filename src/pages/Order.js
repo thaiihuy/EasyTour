@@ -14,9 +14,11 @@ import {
     Modal,
     TouchableHighlight
 } from 'react-native';
+import icBack from '../images/icon/back_black.png';
+import icLogo from '../images/icon/tour.png';
 import getToken from '../components/api/getToken';
 import sendOrder from '../components/api/sendOrder';
-const { width } = Dimensions.get('window');
+const { width, height } = Dimensions.get('window');
 export default class Order extends Component {
     constructor(props) {
         super(props);
@@ -72,39 +74,76 @@ export default class Order extends Component {
 
         this.setModalVisible(true);
     }
+    convertTime(time) {
+        return 'Ngày đi: ' + time.substring(8, 10) + '-' + time.substring(5, 7) + '-' + time.substring(0, 4);
+    }
+    BackToHome() {
+        this.props.navigation.navigate('Home');
+    }
     render() {
         return (
-            
+
             <View style={styles.container}>
                 <Modal
+                    style={{ flex: 1 }}
                     animationType="slide"
                     transparent={false}
                     visible={this.state.modalVisible}
-                    onRequestClose={() => {
-                        alert('Modal has been closed.');
-                    }}>
-                    <View style={{ marginTop: 22 }}>
-                        <View>
-                            <Text>Cảm ơn bạn đã đặt Tour của chúng tôi!</Text>
-                            <Text>Chúng tôi sẽ liên hệ với bạn sớm nhất có thể để hoàn thành thủ tục thanh toán !</Text>
+                // onRequestClose={() => {
+                //     alert('Modal has been closed.');
+                // }}
+                >
+                    <View style={{ marginTop: 22,flex:1 }}>
+                        <View style={{
+                            flexDirection: 'column', justifyContent: 'center',
+                            alignItems: 'center',
+                        }}>
+                            <Text style={{ textAlign: 'center' }}>Cảm ơn bạn đã đặt Tour của chúng tôi!</Text>
+                            <Text style={{ textAlign: 'center' }}>Chúng tôi sẽ liên hệ với bạn sớm nhất có thể để hoàn thành thủ tục thanh toán !</Text>
                             <TouchableOpacity
+                                style={{
+                                    width: 100,
+                                    backgroundColor: '#bfcc50',
+                                    borderRadius: 20,
+                                    marginVertical: 10,
+                                    paddingVertical: 7,
+                                    justifyContent: 'center',
+                                    alignItems: 'center',
+                                }}
                                 onPress={() => {
                                     this.setModalVisible(!this.state.modalVisible);
                                     this.props.navigation.navigate('Home');
                                 }}>
-                                <Text>Về trang chủ</Text>
+                                <Text style={{
+                                    fontSize: 12,
+                                    fontWeight: '500',
+                                    textAlign: 'center',
+                                    justifyContent: 'flex-end',
+                                }}>Về trang chủ</Text>
                             </TouchableOpacity>
                         </View>
                     </View>
                 </Modal>
+                <View style={{ height: height / 8, flex: 1 / 15, backgroundColor: '#bfcc50', padding: 10, justifyContent: 'space-around', alignContent: 'center' }}>
+                    <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
+                        <TouchableOpacity onPress={this.BackToHome.bind(this)}>
+                            <Image style={{ width: 25, height: 25 }} source={icBack} />
+                        </TouchableOpacity>
+                        <Text numberOfLines={1} style={{ fontSize: 15, fontWeight: '500' }}>Đặt tour</Text>
+                        <Image style={{ width: 25, height: 25 }} source={icLogo} />
+                    </View>
+                </View>
+                <Text style={styles.produceName} style={{ textAlign: 'center' }}>{this.props.navigation.state.params.tour.tentour}</Text>
                 <View style={{ flexDirection: 'row', justifyContent: 'space-around', margin: 50 }}>
+
                     <Image
                         style={styles.productImage}
                         source={{ uri: 'http://easytour.tk/image/' + this.props.navigation.state.params.tour.hinhanh }}
                     />
                     <View style={{ flexDirection: 'column', justifyContent: 'space-around' }}>
-                        <Text style={styles.produceName}>{this.props.navigation.state.params.tour.tentour}</Text>
-                        <Text style={styles.produceName}>{this.convertPrice(this.props.navigation.state.params.tour.total)}</Text>
+
+                        <Text style={styles.produceName} style={{ color: 'red' }}>{this.convertPrice(this.props.navigation.state.params.tour.total)}</Text>
+                        <Text>{this.convertTime(this.props.navigation.state.params.tour.ngaydi)}</Text>
                         <View style={styles.numberOfProduct}>
                             <TouchableOpacity onPress={this.decr.bind(this)}>
                                 <Text>-</Text>
@@ -117,7 +156,7 @@ export default class Order extends Component {
                     </View>
                 </View>
                 <View>
-                    <Text style={{ alignSelf: 'flex-end' }}>{'Tổng cộng: ' + this.convertPrice(this.state.price)}</Text>
+                    <Text style={{ alignSelf: 'flex-end', color: 'purple' }}>{'Tổng cộng: ' + this.convertPrice(this.state.price)}</Text>
                 </View>
                 <View>
                     <TouchableOpacity style={styles.button} onPress={this.takeOrder.bind(this)}>
