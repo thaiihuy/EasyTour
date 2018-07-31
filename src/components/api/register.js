@@ -1,4 +1,4 @@
-const register = (username,sdt,password) => (
+const register = (username,ten,sdt,password) => (
     fetch('http://easytour.tk/api/auth/register',
     {   
         method: 'POST',
@@ -6,7 +6,7 @@ const register = (username,sdt,password) => (
             'Content-Type': 'application/json',
             Accept: 'application/json'
         },
-        body: JSON.stringify({username,sdt,password})
+        body: JSON.stringify({username,ten,sdt,password})
     })
     .then(res => res.json())
 );

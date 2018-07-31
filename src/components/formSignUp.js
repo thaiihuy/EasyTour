@@ -17,6 +17,7 @@ export default class FormSignUp extends Component {
 
 		this.state = {
 			username: null,
+			ten: null,
 			password: null,
 			rePassword: null,
 			sdt: null,
@@ -48,24 +49,35 @@ export default class FormSignUp extends Component {
 	}
 
 	checkRegister() {
-		const { username, sdt, password } = this.state;
-		if (password == this.state.rePassword) {
-			register(username, sdt, password)
-				.then(res => {
-					if (res.message === 'User created successfully') return this.onSuccess();
-					this.onFail();
-				});
+		const { username, ten, sdt, password } = this.state;
+		if (username && ten && sdt && password != null) {
+			if (password == this.state.rePassword) {
+				register(username, ten, sdt, password)
+					.then(res => {
+						if (res.message === 'User created successfully') return this.onSuccess();
+						this.onFail();
+					});
+			} else {
+				Alert.alert(
+					'Thông báo',
+					'Nhập lại mật khẩu không đúng!',
+					[
+						{ text: 'OK', onPress: this.removeUsername.bind(this) }
+					],
+					{ cancelable: false }
+				);
+			}
+
 		}else{
 			Alert.alert(
 				'Thông báo',
-				'Nhập lại mật khẩu không đúng!',
+				'Vui lòng nhập đầy đủ các trường!',
 				[
 					{ text: 'OK', onPress: this.removeUsername.bind(this) }
 				],
 				{ cancelable: false }
 			);
 		}
-
 	}
 	// async checkRegister() {
 	// 	try {
@@ -101,6 +113,12 @@ export default class FormSignUp extends Component {
 	render() {
 		return (
 			<View style={styles.container}>
+				<TextInput style={styles.inputBox}
+					underlineColorAndroid='rgba(0,0,0,0)'
+					placeholder='Họ tên'
+					value={this.state.ten}
+					onChangeText={(text) => this.setState({ ten: text })}
+				/>
 				<TextInput style={styles.inputBox}
 					underlineColorAndroid='rgba(0,0,0,0)'
 					placeholder='Tên đăng nhập'

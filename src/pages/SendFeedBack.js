@@ -6,55 +6,46 @@ import {
     TouchableOpacity,
     Image,
     TextInput,
-    Alert
+    Alert,
+    Dimensions,
 } from 'react-native';
 import icBack from '../images/icon/back_black.png';
 import icLogo from '../images/icon/user.png';
 import getToken from '../components/api/getToken';
-import ChangePassword from '../components/api/changePassword';
-export default class ChangeInfo extends Component {
+import SendFB from '../components/api/sendFB';
+const width = Dimensions.get('window');
+export default class SendFeedBack extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            password:'',
-            repassword:'',
+            feedback: '',
+            id: '',
+            height: 0
         };
     }
-    removePassword() {
-		this.setState({ repassword: '',password:'' });
-	}
     Save() {
-        if(this.state.password==this.state.repassword){
-        ChangePassword(this.state.id,this.state.password).then(res=>{
+        var today = new Date();
+        var ngaydi = today.getFullYear() + '-' + parseInt(today.getMonth() + 1) + '-' + today.getDate() + ' ' + today.getHours() + ':' + today.getMinutes() + ':' + today.getSeconds();
+        SendFB(this.state.feedback, ngaydi, this.state.id).then(res => {
             Alert.alert(
-				'Thông báo',
-				'Thay đổi mật khẩu thành công!',
-				[
-					{ text: 'OK', onPress: this.BackToHome.bind(this) }
-				],
-				{ cancelable: false }
-			);
+                'Thông báo',
+                'Gửi phản hồi thành công!',
+                [
+                    { text: 'OK', onPress: this.BackToHome.bind(this) }
+                ],
+                { cancelable: false }
+            );
         })
-    }else{
-        Alert.alert(
-            'Thông báo',
-            'Nhập lại mật khẩu không đúng!',
-            [
-                { text: 'OK',  onPress: this.removePassword.bind(this) }
-            ],
-            { cancelable: false }
-        );
     }
-}
     loadData() {
         getToken().then(res => {
-           this.setState({ 
-               id:res.user.id,
-           })
+            this.setState({
+                id: res.user.id,
+            })
         })
     }
-    componentWillMount(){
+    componentWillMount() {
         this.loadData();
     }
     BackToHome() {
@@ -67,23 +58,27 @@ export default class ChangeInfo extends Component {
                     <TouchableOpacity onPress={this.BackToHome.bind(this)}>
                         <Image source={icBack} style={styles.iconStyle} />
                     </TouchableOpacity>
-                    <Text style={styles.titleStyle}>Đổi mật khẩu</Text>
+                    <Text style={styles.titleStyle}>Góp ý</Text>
                     <Image source={icLogo} style={styles.iconStyle} />
                 </View>
                 <View>
-                    <TextInput style={styles.inputBox}
+                    <TextInput
+                        multiline={true}
+                        onContentSizeChange={(event) => {
+                            this.setState({ height: event.nativeEvent.contentSize.height })
+                        }}
+                        style={{
+                            width: width - 100,
+                            backgroundColor: '#fff',
+                            borderRadius: 25,
+                            paddingHorizontal: 20,
+                            fontSize: 16,
+                            marginVertical: 10, height: Math.max(35, this.state.height)
+                        }}
                         underlineColorAndroid='rgba(0,0,0,0)'
-                        secureTextEntry={true}
-                        placeholder='Mật khẩu mới'
-                        value={this.state.password}
-                        onChangeText={(text) => this.setState({ password: text })}
-                    />
-                    <TextInput style={styles.inputBox}
-                        underlineColorAndroid='rgba(0,0,0,0)'
-                        secureTextEntry={true}
-                        placeholder='Nhập lại mật khẩu mới'
-                        value={this.state.repassword}
-                        onChangeText={(text) => this.setState({ repassword: text })}
+                        placeholder='Phản hồi của bạn'
+                        value={this.state.feedback}
+                        onChangeText={(text) => this.setState({ feedback: text })}
                     />
                     {/* <TextInput style={styles.inputBox}
                         underlineColorAndroid='rgba(0,0,0,0)'
@@ -93,7 +88,7 @@ export default class ChangeInfo extends Component {
                     /> */}
                 </View>
                 <TouchableOpacity style={styles.signUpStyle} onPress={this.Save.bind(this)}>
-                    <Text style={styles.txtSave}>Lưu lại</Text>
+                    <Text style={styles.txtSave}>Gửi</Text>
                 </TouchableOpacity>
             </View>
         );
@@ -120,8 +115,8 @@ const styles = StyleSheet.create({
         borderRadius: 20,
     },
     inputBox: {
-        width: 300,
-        backgroundColor: 'rgba(255,255 ,255 ,0.3)',
+        width: width - 100,
+        backgroundColor: '#fff',
         borderRadius: 25,
         paddingHorizontal: 20,
         fontSize: 16,

@@ -19,6 +19,7 @@ import IndexApp from '../pages/IndexApp.js';
 import Cart from '../pages/Cart.js';
 import Order from '../pages/Order.js';
 import Locate from '../pages/Locate.js';
+import SendFeedBack from '../pages/SendFeedBack';
 const transitionConfig = () => {
 	return {
 		transitionSpec: {
@@ -54,6 +55,7 @@ const transitionConfig = () => {
 				Cart:Cart,
 				Order:Order,
 				Locate:Locate,
+				SendFeedBack:SendFeedBack,
 			},
 			{
 				initialRouteName:'Login',

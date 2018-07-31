@@ -17,6 +17,9 @@ export default class SideMenu extends Component {
   gotoOrderHistory() {
     this.props.navigation.navigate('OrderHistory');
   }
+  gotoSendFeedBack(){
+    this.props.navigation.navigate('SendFeedBack');
+  }
   onSignOut() {
     AsyncStorage.clear();
     this.props.navigation.navigate('Login');
@@ -28,7 +31,7 @@ export default class SideMenu extends Component {
   componentWillMount() {
     getToken().then(res => {
         this.setState({
-            user: res.user.username,
+            user: res.user.ten,
         })
     })
 }
@@ -44,6 +47,9 @@ export default class SideMenu extends Component {
             </TouchableOpacity> */}
             <TouchableOpacity style={styles.btnSignInStyle} onPress={this.gotoChangeInfo.bind(this)}>
               <Text style={styles.btnTextSignIn}>Đổi mật khẩu</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.btnSignInStyle} onPress={this.gotoSendFeedBack.bind(this)}>
+              <Text style={styles.btnTextSignIn}>Gửi góp ý</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.btnSignInStyle} onPress={this.onSignOut.bind(this)}>
               <Text style={styles.btnTextSignIn}>Đăng xuất</Text>
