@@ -114,13 +114,13 @@ export default class ProductDetail extends Component {
                         <TouchableOpacity onPress={this.BackToHome.bind(this)}>
                             <Image style={{ width: 25, height: 25 }} source={icBack} />
                         </TouchableOpacity>
-                        <View style={{width:width-80}}>
+                        <View style={{ width: width - 80 }}>
                             <Text numberOfLines={1} style={{ fontSize: 15, fontWeight: '500' }}>{item.tentour}</Text>
                         </View>
-                        
-                        <TouchableOpacity onPress={this.goToLocate.bind(this)}>
-                            <Image style={{ width: 25, height: 25 }} source={icLogo} />
-                        </TouchableOpacity>
+
+
+                        <Image style={{ width: 25, height: 25 }} source={icLogo} />
+
                     </View>
                 </View>
                 <View style={styles.wrapper}>

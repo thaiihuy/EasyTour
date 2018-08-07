@@ -126,6 +126,7 @@ export default class FormSignUp extends Component {
 					onChangeText={(text) => this.setState({ username: text })}
 				/>
 				<TextInput style={styles.inputBox}
+					keyboardType='numeric'
 					underlineColorAndroid='rgba(0,0,0,0)'
 					placeholder='Số điện thoại'
 					value={this.state.sdt}

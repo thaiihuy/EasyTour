@@ -8,6 +8,8 @@ import {
     TextInput,
     Alert,
     Dimensions,
+    TouchableWithoutFeedback,
+    Keyboard
 } from 'react-native';
 import icBack from '../images/icon/back_black.png';
 import icLogo from '../images/icon/user.png';
@@ -61,7 +63,7 @@ export default class SendFeedBack extends Component {
                     <Text style={styles.titleStyle}>Góp ý</Text>
                     <Image source={icLogo} style={styles.iconStyle} />
                 </View>
-                <View>
+                <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
                     <TextInput
                         multiline={true}
                         onContentSizeChange={(event) => {
@@ -86,7 +88,7 @@ export default class SendFeedBack extends Component {
                         value={this.state.sdt}
                         onChangeText={(text) => this.setState({ sdt: text })}
                     /> */}
-                </View>
+                </TouchableWithoutFeedback>
                 <TouchableOpacity style={styles.signUpStyle} onPress={this.Save.bind(this)}>
                     <Text style={styles.txtSave}>Gửi</Text>
                 </TouchableOpacity>
